@@ -1,18 +1,17 @@
+
 name: Android CI and Release
 
 on:
   push:
-    branches: ["main"]
-    tags: ["v*"]
+    branches: [main]
+    tags: ['v*']
   pull_request:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# Only cancel an older run when a newer commit arrives on a pull request.
-# Pushes to main and tags always finish.
 concurrency:
   group: android-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -24,7 +23,7 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -33,68 +32,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      # Installs Gradle 8.9. Used to create the wrapper when it is missing.
-      - name: Set up Gradle
+      - name: Set up Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      # Creates gradlew and gradle-wrapper.jar if they are not in the repo.
-      # --no-validate-url skips the network check that failed in the last run.
-      # The step retries because the failure is often temporary.
-      - name: Generate Gradle wrapper if missing
-        if: hashFiles('gradle/wrapper/gradle-wrapper.jar') == ''
-        shell: bash
-        run: |
-          for attempt in 1 2 3; do
-            if gradle wrapper --gradle-version 8.9 --no-validate-url; then
-              exit 0
-            fi
-            echo "Wrapper generation failed (attempt $attempt). Retrying in 15 seconds..."
-            sleep 15
-          done
-          echo "::error::Could not generate the Gradle wrapper after 3 attempts."
-          exit 1
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
       - name: Run Android lint
-        run: ./gradlew lintDebug --stacktrace
+        run: gradle lintDebug --stacktrace
 
       - name: Run unit tests
-        run: ./gradlew testDebugUnitTest --stacktrace
+        run: gradle testDebugUnitTest --stacktrace
 
       - name: Build debug APK
-        id: build
         shell: bash
         run: |
           set -o pipefail
-          ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
-
-      # Runs only when the build fails. Lists Kotlin compile errors
-      # (lines starting with "e: ") in the run summary and as annotations.
-      - name: Summarize compile errors
-        if: failure()
-        shell: bash
-        run: |
-          {
-            echo "## Compile errors"
-            echo ""
-            echo '```'
-            grep -E '^e: ' build.log || echo "No 'e:' lines found. See the build-log artifact."
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-          grep -E '^e: ' build.log | sed 's/^/::error::/' || true
-
-      - name: Upload build log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build.log
-          if-no-files-found: ignore
-          retention-days: 14
+          gradle assembleDebug --stacktrace 2>&1 | tee build.log
 
       - name: Upload debug APK
         if: success()
@@ -105,24 +58,33 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Upload lint report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
           path: app/build/reports/lint-results-debug.html
-          if-no-files-found: warn
+          if-no-files-found: ignore
           retention-days: 14
 
-      # Runs only for version tags such as v0.1.0.
-      - name: Publish GitHub release for tag
+      - name: Publish GitHub release
         if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk "dist/GameControl-${GITHUB_REF_NAME}.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk \
+            "dist/GameControl-${GITHUB_REF_NAME}.apk"
           gh release create "${GITHUB_REF_NAME}" dist/*.apk \
             --title "GameControl ${GITHUB_REF_NAME}" \
             --generate-notes \
