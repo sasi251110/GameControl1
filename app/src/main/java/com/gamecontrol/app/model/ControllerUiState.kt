@@ -4,10 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
+import com.gamecontrol.app.input.RawInput
 
 /**
- * Holds what the controller UI is currently pressing and where the sticks are.
- * Temporary for Phase 1. Phase 2 replaces it with a proper input engine.
+ * Holds what the touch UI is currently pressing and where the sticks are.
+ * The input engine reads this through snapshot().
  */
 class ControllerUiState {
 
@@ -41,6 +42,15 @@ class ControllerUiState {
             rightY = y
         }
     }
+
+    /** Current touch state as plain values. Reading it in composition makes the UI update on change. */
+    fun snapshot(): RawInput = RawInput(
+        buttons = pressed.toSet(),
+        leftX = leftX,
+        leftY = leftY,
+        rightX = rightX,
+        rightY = rightY,
+    )
 
     /** Releases everything. Used when the app is paused so nothing stays stuck. */
     fun releaseAll() {

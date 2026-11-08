@@ -1,6 +1,7 @@
 package com.gamecontrol.app.ui.controller
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,10 +22,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.gamecontrol.app.model.ControllerButton
 import com.gamecontrol.app.model.ControllerUiState
 import com.gamecontrol.app.ui.theme.ColorOnSecondaryContainer
@@ -45,6 +46,7 @@ private val StickSize = 104.dp
 @Composable
 fun ControllerScreen(
     state: ControllerUiState,
+    onOpenTester: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ReleaseInputsWhenPaused(state)
@@ -56,7 +58,7 @@ fun ControllerScreen(
             .systemBarsPadding()
             .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
-        StatusBar()
+        StatusBar(onOpenTester = onOpenTester)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,11 +74,11 @@ fun ControllerScreen(
 }
 
 @Composable
-private fun StatusBar() {
+private fun StatusBar(onOpenTester: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(40.dp),
+            .height(48.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -93,24 +95,44 @@ private fun StatusBar() {
             )
         }
         Row(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(ColorSurfaceHigh)
-                .padding(horizontal = 10.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Box(
                 modifier = Modifier
-                    .size(6.dp)
+                    .height(44.dp)
                     .clip(CircleShape)
-                    .background(ColorOutline),
-            )
-            Text(
-                text = "NOT CONNECTED",
-                style = MaterialTheme.typography.labelSmall,
-                color = ColorOnSurfaceVariant,
-            )
+                    .background(ColorSurfaceHigh)
+                    .clickable(onClick = onOpenTester)
+                    .padding(horizontal = 14.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "TESTER",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = ColorOnSurface,
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(ColorSurfaceHigh)
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(6.dp)
+                        .clip(CircleShape)
+                        .background(ColorOutline),
+                )
+                Text(
+                    text = "NOT CONNECTED",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = ColorOnSurfaceVariant,
+                )
+            }
         }
     }
 }
