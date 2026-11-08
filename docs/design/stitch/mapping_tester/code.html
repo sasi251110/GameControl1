@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Space+Grotesk:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121317;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-primary":"#32009a","outline":"#938ea1","surface":"#121317","on-surface":"#e3e2e7","on-tertiary-fixed":"#002113","background":"#121317","primary-fixed":"#e6deff","tertiary-container":"#00a572","on-tertiary":"#003824","inverse-primary":"#613de0","on-primary-container":"#2b0088","on-surface-variant":"#c9c4d8","on-background":"#e3e2e7","on-secondary-fixed-variant":"#004c69","surface-container-high":"#292a2e","on-error":"#690005","on-secondary":"#00354a","error":"#ffb4ab","surface-container":"#1f1f24","on-tertiary-container":"#00311f","secondary-fixed":"#c4e7ff","primary":"#cabeff","surface-dim":"#121317","surface-bright":"#38393d","primary-container":"#947dff","on-secondary-container":"#00374d","tertiary-fixed":"#6ffbbe","on-primary-fixed-variant":"#4918c8","on-error-container":"#ffdad6","primary-fixed-dim":"#cabeff","outline-variant":"#484555","on-tertiary-fixed-variant":"#005236","surface-container-low":"#1a1b20","error-container":"#93000a","secondary-container":"#00a6e0","secondary":"#7bd0ff","surface-variant":"#343439","surface-container-highest":"#343439","inverse-surface":"#e3e2e7","on-primary-fixed":"#1c0062","inverse-on-surface":"#2f3035","secondary-fixed-dim":"#7bd0ff","tertiary-fixed-dim":"#4edea3","surface-container-lowest":"#0d0e12","tertiary":"#4edea3","surface-tint":"#cabeff","on-secondary-fixed":"#001e2c"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-md":"1rem","margin-desktop":"3rem","space-xl":"2.5rem","gutter":"1rem","gutter-desktop":"1.5rem","space-lg":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","margin":"1rem","margin-tablet":"2rem","gutter-tablet":"1.25rem"},"fontFamily":{"headline-lg":["Space Grotesk"],"body-md":["Inter"],"headline-xl":["Space Grotesk"],"headline-md":["Space Grotesk"],"label-sm":["JetBrains Mono"],"label-lg":["JetBrains Mono"],"headline-sm":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"label-md":["JetBrains Mono"],"headline-xl-mobile":["Space Grotesk"],"body-sm":["Inter"],"body-lg":["Inter"]},"fontSize":{"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"headline-xl":["44px",{"lineHeight":"52px","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["10px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.02em","fontWeight":"500"}],"headline-sm":["18px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><button aria-label="Go Back" class="w-11 h-11 flex items-center justify-center rounded-lg bg-surface-container-high/60 text-on-surface hover:text-primary active:bg-surface-container-highest transition-colors shrink-0" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back_ios_new</span></button><img alt="GameControl Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1WilvA-MTOXfIUu2OzNibVXhfZQIjB8837AaBp732IsXK5c9GwAUpA9kC5YQkHNPssqRls2m4-R-fCIwtJ1hKh9sNwL7Ur0Ofn0MuC7w5exF7ManKqTBRAV0Dcr2EAotXRSHykSeP_HFrTb2wG-xlZpzje_blLrZ0gaVyAQ9BYIRmCiDU3wEnXwOTzrCZNfcnCakZPHIVqxYIuTnT_Acenw94zxVvhzGgjFCFHkRqSW"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate leading-none">Button Remapping</span><span class="font-label-sm text-label-sm text-on-surface-variant truncate">GameControl Precision Engine</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface pb-safe"><div class="flex flex-col w-full">
+<!-- Sub-Header Precision Telemetry Bar -->
+<div class="px-gutter py-space-sm bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_currentColor] animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">DualSense Edge Connected</span>
+</div>
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-secondary">0.78 ms</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface">1000 Hz</span>
+</div>
+</div>
+<!-- Main View Container -->
+<div class="p-gutter flex flex-col gap-space-md">
+<!-- Segmented Tab Controller -->
+<div class="w-full bg-surface-container-low p-1 rounded-xl flex items-center shadow-md">
+<button class="flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 bg-surface-container-high text-primary shadow-sm" id="tabBtnRemap" onclick="switchTab('remap')" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>BUTTON REMAPPING</span>
+</button>
+<button class="flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface" id="tabBtnTester" onclick="switchTab('tester')" type="button">
+<span class="material-symbols-outlined text-[16px]">sensors</span>
+<span>HARDWARE TESTER</span>
+</button>
+</div>
+<!-- TAB 1: BUTTON REMAPPING -->
+<div class="flex flex-col gap-space-md" id="panelRemap">
+<!-- Profile Header Pill Bar -->
+<div class="bg-surface-container p-space-md rounded-xl flex items-center justify-between shadow-sm">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Active Mappings</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">Tournament Preset #01</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm px-2 py-1 rounded bg-primary-container/20 text-primary">SLOT A</span>
+</div>
+</div>
+<!-- Action Face Buttons Remap Grid -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="w-1.5 h-3.5 bg-primary rounded-full"></span>
+            Face Key Matrix
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Default 1:1 Map</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Cross Item -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary shadow-inner">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Cross</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Primary Action</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span>
+<select class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg focus:outline-none">
+<option selected="">Gamepad A (Cross)</option>
+<option>Gamepad B (Circle)</option>
+<option>Gamepad X (Square)</option>
+<option>Gamepad Y (Triangle)</option>
+<option>Jump / Vault (Macro)</option>
+</select>
+</div>
+</div>
+<!-- Circle Item -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-error shadow-inner">
+<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Circle</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Crouch / Slide</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span>
+<select class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg focus:outline-none">
+<option selected="">Gamepad B (Circle)</option>
+<option>Gamepad A (Cross)</option>
+<option>Gamepad X (Square)</option>
+<option>Gamepad Y (Triangle)</option>
+</select>
+</div>
+</div>
+<!-- Square Item -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[18px]">crop_square</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Square</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Reload / Interact</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span>
+<select class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg focus:outline-none">
+<option selected="">Gamepad X (Square)</option>
+<option>Gamepad A (Cross)</option>
+<option>Gamepad B (Circle)</option>
+<option>Gamepad Y (Triangle)</option>
+</select>
+</div>
+</div>
+<!-- Triangle Item -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary shadow-inner">
+<span class="material-symbols-outlined text-[18px]">change_history</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Triangle</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Switch Weapon</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">arrow_forward</span>
+<select class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg focus:outline-none">
+<option selected="">Gamepad Y (Triangle)</option>
+<option>Gamepad A (Cross)</option>
+<option>Gamepad B (Circle)</option>
+<option>Gamepad X (Square)</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Trigger & Shoulder Actuation Modes -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="w-1.5 h-3.5 bg-secondary rounded-full"></span>
+            Triggers & Shoulders
+          </span>
+<span class="font-label-sm text-label-sm text-secondary">Hair-Trigger Enabled</span>
+</div>
+<!-- Bumper Swap Rocker -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between">
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md font-semibold text-on-surface">L1 / R1 Quick Bumper Swap</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Inverts shoulder bumper and trigger assignments</span>
+</div>
+<button class="w-12 h-6 rounded-full bg-surface-container-highest p-0.5 flex items-center transition-colors" id="bumperSwapToggle" onclick="toggleRocker(this)" type="button">
+<div class="w-5 h-5 rounded-full bg-outline-variant shadow transition-transform"></div>
+</button>
+</div>
+<!-- Hair-Trigger Actuation -->
+<div class="bg-surface-container p-3 rounded-lg flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-on-surface">L2 / R2 Digital Hair-Trigger</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">0.3mm instant click actuation (bypasses 0-255 curve)</span>
+</div>
+<button class="w-12 h-6 rounded-full bg-primary p-0.5 flex items-center justify-end transition-colors" id="hairTriggerToggle" onclick="toggleRocker(this, true)" type="button">
+<div class="w-5 h-5 rounded-full bg-on-primary shadow transition-transform"></div>
+</button>
+</div>
+<!-- Actuation Depth Visual Meter -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Deadzone: 0.1 mm</span>
+<span class="text-primary font-semibold">Fire Cutoff: 0.3 mm (Full Cap)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden flex">
+<div class="bg-primary w-[15%] h-full"></div>
+<div class="bg-outline-variant/30 w-[85%] h-full"></div>
+</div>
+</div>
+</div>
+<!-- Thumbstick Clicks (L3/R3) to Rear Paddles -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md font-semibold text-on-surface">L3 / R3 Stick Clicks</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Route to rear ergonomic paddles</span>
+</div>
+<select class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg focus:outline-none">
+<option selected="">Rear Paddle Left & Right</option>
+<option>Direct Analog Stick Down</option>
+<option>Disabled (Anti-Missclick)</option>
+</select>
+</div>
+</div>
+<!-- Tactical Peripheral Visual Image Placeholders -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-low p-2.5 rounded-xl flex flex-col gap-2">
+<img class="w-full h-24 object-cover rounded-lg" data-alt="High precision close-up of a matte black esports controller tactile D-pad and analog stick module with soft purple emissive micro-LED status accents in dark aerospace testing lab" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx7w0ZNfnb3ZT3SDPj-HXPgunvlmvZmGvgsGEq-QwV4Q01cq0tQm1WZzpDWklNoisNreHlsSNw3CvIOVDuGyVN3HUyM_3pto4h7KslMqZoEHDUAetyWeZUj5TWZU10dy00gvcZngFVox1SZuEQTDdt5A2M4J3ooIiL10hQ87_Pn_n9J0gExQln5OoYrAiW-nQMeOfO107w9bS4rwVu27zPeeemu3vLexcx3KwYpG4m"/>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase text-center">Hall-Effect Module L</span>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded-xl flex flex-col gap-2">
+<img class="w-full h-24 object-cover rounded-lg" data-alt="Industrial gaming controller trigger mechanism with micro mechanical switches and metallic stop stops, captured in moody cyan illuminated engineering cockpit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc8hyw1ebYXYYAsUKdbfxY3Ez99_VfKLEO4Goe77U_5xIsfJ73gwrLo2-C4Fu5g7O5tuL1Di-4D7bxXg8W1VEWqJLUD1xldU_X8aUJnD4C7KQk83-raxX-u2xf3qgzMPipC9u8tRJb-cYrRpaYD1rnWWpsLrufKaT5xHKkuKY8h4jGIN1aQYfD9zrjI7Or5rmCU4CQvsqVTs7XUnZ4wZysQHKMvLxz71ZiwTQI-IjG"/>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase text-center">Tactile Stop Stop R</span>
+</div>
+</div>
+</div>
+<!-- TAB 2: HARDWARE INPUT TESTER -->
+<div class="hidden flex flex-col gap-space-md" id="panelTester">
+<!-- Live Controller Telemetry Stage -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">radar</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Live Dual Stick Visualizer</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary animate-pulse">STREAMING 1KHz</span>
+</div>
+<!-- Stick Crosshair Grid Visualizers -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Left Stick Grid -->
+<div class="bg-surface-container p-3 rounded-lg flex flex-col items-center gap-2 relative">
+<div class="flex justify-between w-full font-label-sm text-label-sm text-on-surface-variant">
+<span>LS (MOVE)</span>
+<span class="text-secondary font-mono" id="coordLS">X: 0.00 Y: 0.00</span>
+</div>
+<!-- Crosshair Box -->
+<div class="w-32 h-32 bg-surface-container-lowest rounded-lg relative flex items-center justify-center overflow-hidden shadow-inner">
+<!-- Radial Deadzone Circle -->
+<div class="w-10 h-10 rounded-full bg-outline-variant/15 flex items-center justify-center">
+<span class="font-label-sm text-[8px] text-outline-variant">DEADZONE</span>
+</div>
+<!-- Axis lines -->
+<div class="absolute w-full h-[1px] bg-surface-container-highest"></div>
+<div class="absolute h-full w-[1px] bg-surface-container-highest"></div>
+<!-- Moving Puck -->
+<div class="w-4 h-4 rounded-full bg-secondary shadow-[0_0_10px_currentColor] absolute transition-all duration-75 transform -translate-x-1/2 -translate-y-1/2" id="puckLS" style="left: 50%; top: 50%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Error Rate: 0.02%</span>
+</div>
+<!-- Right Stick Grid -->
+<div class="bg-surface-container p-3 rounded-lg flex flex-col items-center gap-2 relative">
+<div class="flex justify-between w-full font-label-sm text-label-sm text-on-surface-variant">
+<span>RS (AIM)</span>
+<span class="text-primary font-mono" id="coordRS">X: 0.00 Y: 0.00</span>
+</div>
+<!-- Crosshair Box -->
+<div class="w-32 h-32 bg-surface-container-lowest rounded-lg relative flex items-center justify-center overflow-hidden shadow-inner">
+<!-- Radial Deadzone Circle -->
+<div class="w-8 h-8 rounded-full bg-outline-variant/15 flex items-center justify-center">
+<span class="font-label-sm text-[8px] text-outline-variant">3% DZ</span>
+</div>
+<!-- Axis lines -->
+<div class="absolute w-full h-[1px] bg-surface-container-highest"></div>
+<div class="absolute h-full w-[1px] bg-surface-container-highest"></div>
+<!-- Moving Puck -->
+<div class="w-4 h-4 rounded-full bg-primary shadow-[0_0_10px_currentColor] absolute transition-all duration-75 transform -translate-x-1/2 -translate-y-1/2" id="puckRS" style="left: 50%; top: 50%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Error Rate: 0.01%</span>
+</div>
+</div>
+<!-- Analog Trigger Gauges -->
+<div class="flex flex-col gap-2 pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Analog Trigger Pressure Gauges</span>
+<!-- L2 Gauge -->
+<div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1.5">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">L2 Trigger (Analog Depth)</span>
+<span class="text-secondary font-mono" id="valL2">0 / 255 (0%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-md overflow-hidden p-0.5">
+<div class="h-full bg-secondary rounded transition-all duration-100" id="barL2" style="width: 0%;"></div>
+</div>
+</div>
+<!-- R2 Gauge -->
+<div class="bg-surface-container p-3 rounded-lg flex flex-col gap-1.5">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">R2 Trigger (Analog Depth)</span>
+<span class="text-primary font-mono" id="valR2">0 / 255 (0%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-md overflow-hidden p-0.5">
+<div class="h-full bg-primary rounded transition-all duration-100" id="barR2" style="width: 0%;"></div>
+</div>
+</div>
+</div>
+<!-- Interactive Virtual Pad Buttons for Instant Latency Testing -->
+<div class="flex flex-col gap-2 pt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Interactive Input Latency Tester</span>
+<div class="grid grid-cols-4 gap-2">
+<button class="bg-surface-container active:scale-95 py-3 rounded-lg flex flex-col items-center gap-1 hover:bg-surface-container-high transition" onclick="simulatePress('CROSS')" type="button">
+<span class="material-symbols-outlined text-secondary text-[20px]">close</span>
+<span class="font-label-sm text-label-sm text-on-surface">CROSS</span>
+</button>
+<button class="bg-surface-container active:scale-95 py-3 rounded-lg flex flex-col items-center gap-1 hover:bg-surface-container-high transition" onclick="simulatePress('CIRCLE')" type="button">
+<span class="material-symbols-outlined text-error text-[20px]">radio_button_unchecked</span>
+<span class="font-label-sm text-label-sm text-on-surface">CIRCLE</span>
+</button>
+<button class="bg-surface-container active:scale-95 py-3 rounded-lg flex flex-col items-center gap-1 hover:bg-surface-container-high transition" onclick="simulatePress('SQUARE')" type="button">
+<span class="material-symbols-outlined text-primary text-[20px]">crop_square</span>
+<span class="font-label-sm text-label-sm text-on-surface">SQUARE</span>
+</button>
+<button class="bg-surface-container active:scale-95 py-3 rounded-lg flex flex-col items-center gap-1 hover:bg-surface-container-high transition" onclick="simulatePress('TRIANGLE')" type="button">
+<span class="material-symbols-outlined text-tertiary text-[20px]">change_history</span>
+<span class="font-label-sm text-label-sm text-on-surface">TRIANGLE</span>
+</button>
+</div>
+</div>
+<!-- Latency Log Feed -->
+<div class="bg-surface-container-lowest p-3 rounded-lg flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">REALTIME INPUT LOG</span>
+<span class="font-label-sm text-label-sm text-tertiary">0 PACKETS DROPPED</span>
+</div>
+<div class="flex flex-col gap-1 font-label-sm text-label-sm text-on-surface" id="inputLogList">
+<div class="flex justify-between py-0.5 border-b border-surface-container">
+<span class="text-secondary font-mono">[00:04:12.891] L2_TRIGGER_PULL</span>
+<span class="text-tertiary">Actuation 100% · 0.74ms</span>
+</div>
+<div class="flex justify-between py-0.5 border-b border-surface-container">
+<span class="text-primary font-mono">[00:04:12.450] R1_BUMPER_PRESS</span>
+<span class="text-tertiary">Debounce 0.00ms · 0.69ms</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Tactical Action Bar -->
+<div class="flex flex-col gap-2 pt-2">
+<button class="w-full py-3.5 bg-primary rounded-xl font-headline-sm text-headline-sm text-on-primary flex items-center justify-center gap-2 shadow-lg hover:opacity-95 active:scale-[0.99] transition" onclick="toastSaved()" type="button">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>SAVE TO ACTIVE PROFILE</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2.5 bg-surface-container-high rounded-lg font-label-sm text-label-sm text-on-surface flex items-center justify-center gap-1.5 hover:bg-surface-container-highest transition" onclick="resetDefaults()" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>RESET DEFAULTS</span>
+</button>
+<button class="py-2.5 bg-surface-container-high rounded-lg font-label-sm text-label-sm text-secondary flex items-center justify-center gap-1.5 hover:bg-surface-container-highest transition" onclick="exportJson()" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>EXPORT MAPPING JSON</span>
+</button>
+</div>
+</div>
+<!-- Notification Toast (Hidden by default) -->
+<div class="hidden fixed bottom-6 left-4 right-4 bg-tertiary text-on-tertiary p-3 rounded-lg font-label-md text-label-md flex items-center justify-between shadow-2xl z-50" id="toastMessage">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span id="toastText">Profile configuration flashed successfully.</span>
+</span>
+<button class="material-symbols-outlined text-[18px]" onclick="document.getElementById('toastMessage').classList.add('hidden')">close</button>
+</div>
+</div>
+</div>
+<script>
+  function switchTab(tab) {
+    const remapPanel = document.getElementById('panelRemap');
+    const testerPanel = document.getElementById('panelTester');
+    const btnRemap = document.getElementById('tabBtnRemap');
+    const btnTester = document.getElementById('tabBtnTester');
+
+    if (tab === 'remap') {
+      remapPanel.classList.remove('hidden');
+      testerPanel.classList.add('hidden');
+      btnRemap.className = 'flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 bg-surface-container-high text-primary shadow-sm';
+      btnTester.className = 'flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface';
+    } else {
+      remapPanel.classList.add('hidden');
+      testerPanel.classList.remove('hidden');
+      btnTester.className = 'flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 bg-surface-container-high text-primary shadow-sm';
+      btnRemap.className = 'flex-1 py-2 px-space-sm rounded-lg font-label-sm text-label-sm transition-all duration-200 flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface';
+    }
+  }
+
+  function toggleRocker(btn, isPrimary = false) {
+    const knob = btn.firstElementChild;
+    const isEngaged = btn.classList.contains('justify-end');
+    if (isEngaged) {
+      btn.classList.remove('justify-end', isPrimary ? 'bg-primary' : 'bg-secondary');
+      btn.classList.add('bg-surface-container-highest');
+      knob.classList.remove(isPrimary ? 'bg-on-primary' : 'bg-on-secondary');
+      knob.classList.add('bg-outline-variant');
+    } else {
+      btn.classList.add('justify-end', isPrimary ? 'bg-primary' : 'bg-secondary');
+      btn.classList.remove('bg-surface-container-highest');
+      knob.classList.add(isPrimary ? 'bg-on-primary' : 'bg-on-secondary');
+      knob.classList.remove('bg-outline-variant');
+    }
+  }
+
+  function simulatePress(name) {
+    const logList = document.getElementById('inputLogList');
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+    const delay = (0.65 + Math.random() * 0.25).toFixed(2);
+    
+    const row = document.createElement('div');
+    row.className = 'flex justify-between py-0.5 border-b border-surface-container';
+    row.innerHTML = `<span class="text-primary font-mono">[${timeStr}] ${name}_DOWN</span><span class="text-tertiary">Actuation 100% · ${delay}ms</span>`;
+    
+    logList.insertBefore(row, logList.firstChild);
+    if (logList.children.length > 5) {
+      logList.removeChild(logList.lastChild);
+    }
+  }
+
+  // Continuous micro-telemetry animation for thumbsticks and triggers
+  let angle = 0;
+  setInterval(() => {
+    angle += 0.05;
+    const lsX = (Math.cos(angle) * 0.65).toFixed(2);
+    const lsY = (Math.sin(angle) * 0.45).toFixed(2);
+    const rsX = (Math.sin(angle * 1.5) * 0.35).toFixed(2);
+    const rsY = (Math.cos(angle * 1.5) * 0.50).toFixed(2);
+
+    const puckLS = document.getElementById('puckLS');
+    const puckRS = document.getElementById('puckRS');
+    const coordLS = document.getElementById('coordLS');
+    const coordRS = document.getElementById('coordRS');
+
+    if (puckLS && coordLS) {
+      puckLS.style.left = (50 + lsX * 40) + '%';
+      puckLS.style.top = (50 + lsY * 40) + '%';
+      coordLS.innerText = `X: ${lsX} Y: ${lsY}`;
+    }
+
+    if (puckRS && coordRS) {
+      puckRS.style.left = (50 + rsX * 40) + '%';
+      puckRS.style.top = (50 + rsY * 40) + '%';
+      coordRS.innerText = `X: ${rsX} Y: ${rsY}`;
+    }
+
+    // Trigger oscillations
+    const l2Pct = Math.floor((Math.sin(angle) + 1) * 45);
+    const r2Pct = Math.floor((Math.cos(angle * 0.8) + 1) * 48);
+
+    const barL2 = document.getElementById('barL2');
+    const barR2 = document.getElementById('barR2');
+    const valL2 = document.getElementById('valL2');
+    const valR2 = document.getElementById('valR2');
+
+    if (barL2 && valL2) {
+      barL2.style.width = l2Pct + '%';
+      valL2.innerText = `${Math.floor(l2Pct * 2.55)} / 255 (${l2Pct}%)`;
+    }
+    if (barR2 && valR2) {
+      barR2.style.width = r2Pct + '%';
+      valR2.innerText = `${Math.floor(r2Pct * 2.55)} / 255 (${r2Pct}%)`;
+    }
+  }, 100);
+
+  function toastSaved() {
+    const toast = document.getElementById('toastMessage');
+    const toastText = document.getElementById('toastText');
+    toastText.innerText = 'Profile written to DualSense NVM in 1.4ms.';
+    toast.classList.remove('hidden');
+    setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+  }
+
+  function resetDefaults() {
+    const toast = document.getElementById('toastMessage');
+    const toastText = document.getElementById('toastText');
+    toastText.innerText = 'Factory profile restored to standard DualSense mapping.';
+    toast.classList.remove('hidden');
+    setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+  }
+
+  function exportJson() {
+    const toast = document.getElementById('toastMessage');
+    const toastText = document.getElementById('toastText');
+    toastText.innerText = 'Tournament_01.gcmap exported to memory.';
+    toast.classList.remove('hidden');
+    setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+  }
+</script></main></body></html>
