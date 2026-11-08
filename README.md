@@ -6,49 +6,48 @@ Turn an Android phone into a customizable PlayStation-style game controller for 
 
 ## Status
 
-Phase 1: virtual controller UI (Android, Jetpack Compose, landscape).
-No networking yet. The PC companion and Wi-Fi connection come in later phases.
+| Phase | Part | State |
+|---|---|---|
+| 1 | Android controller UI | Done |
+| 2 | Input engine, tester, unit tests | Done |
+| 3 | Windows companion receives input | In progress |
+| 4 | Wi-Fi connection and pairing | In progress |
+| 5 | Virtual Xbox 360 controller (ViGEmBus) | In progress, driver is archived upstream |
+| 6 | Connection hardening | Planned |
+| 7 | Mapping and profiles | Planned |
+| 8 | Linux companion | Planned |
+| 9 | Bluetooth (experimental) | Planned |
+| 10 | USB investigation | Planned |
 
 ## Repository layout
 
 ```
 app/                     Android app (Kotlin, Jetpack Compose)
   src/main/java/...
-    model/               Controller button enum and UI state
-    ui/controller/       Controller screen, D-pad, sticks, face buttons
+    input/               Input engine and tuning
+    model/               Controller buttons and UI state
+    network/             Wire protocol and PC connection
+    ui/controller/       Controller screen
+    ui/connect/          PC connection screen
+    ui/tester/           Controller tester screen
     ui/theme/            Colors, typography, theme
+windows/                 Windows companion (C#, .NET 8)
+  src/GameControl.Core/       Protocol, pairing, server (no driver dependency)
+  src/GameControl.Companion/  WinForms app and ViGEm adapter
+  tests/                      Core unit tests
 docs/
-  design/
-    DESIGN.md            Design system (colors, type, spacing, components)
-    stitch/              Stitch screen exports (HTML + PNG reference)
-    logo/                Logo artwork
-  FONTS.md               How to add the design fonts
+  PROTOCOL.md            Wire protocol and security limits
+  design/                DESIGN.md, Stitch exports, logo
+  FONTS.md               Adding the design fonts
 .github/workflows/
-  android.yml            Lint, unit tests, debug APK, tagged releases
+  android.yml            Android and Windows CI, tagged releases
 ```
 
 ## Build
 
-Requirements: JDK 17, Android Studio (or Android SDK), Android 8.0+ device.
-
-- Android Studio: open the folder, sync Gradle, press Run.
-- Command line:
-  ```bash
-  gradle wrapper --gradle-version 8.9   # once, creates gradlew
-  ./gradlew assembleDebug
-  ```
-
-The GitHub Actions workflow creates the Gradle wrapper automatically if it is missing.
+Android: JDK 17, then open the folder in Android Studio, or run `./gradlew assembleDebug`.
+Windows: see [windows/README.md](windows/README.md).
 
 ## Release
 
-Push a tag such as `v0.1.0`. The workflow builds the APK and publishes it on the Releases page.
-
-## Roadmap
-
-1. Android controller UI (done in this repo)
-2. Input engine and controller tester
-3. Custom mapping and profiles
-4. Windows companion and Wi-Fi connection
-5. Bluetooth (experimental)
-6. Linux companion
+Push a tag such as `v0.2.0`. The workflow builds the Android APK and publishes it on the Releases page.
