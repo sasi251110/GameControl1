@@ -11,9 +11,11 @@ on:
 permissions:
   contents: write
 
+# Only cancel an older run when a newer commit arrives on a pull request.
+# Pushes to main and tags always finish.
 concurrency:
-  group: android-${{ github.ref }}
-  cancel-in-progress: true
+  group: android-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -58,7 +60,7 @@ jobs:
           set -o pipefail
           ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
 
-      # Runs only when the build fails. Lists the Kotlin compile errors
+      # Runs only when the build fails. Lists Kotlin compile errors
       # (lines starting with "e: ") in the run summary and as annotations.
       - name: Summarize compile errors
         if: failure()
@@ -68,7 +70,7 @@ jobs:
             echo "## Compile errors"
             echo ""
             echo '```'
-            grep -E '^e: ' build.log || echo "No 'e:' lines found. See the build.log artifact."
+            grep -E '^e: ' build.log || echo "No 'e:' lines found. See the build-log artifact."
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           grep -E '^e: ' build.log | sed 's/^/::error::/' || true
