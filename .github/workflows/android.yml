@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    name: Unzip, bootstrap Gradle, lint, test, build
+    name: Lint, test, build
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -25,30 +25,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # If the project is not extracted yet, unzip the archive stored at
-      # archive/GameControl-project.zip into the repository root.
-      - name: Unzip project archive automatically
-        shell: bash
-        run: |
-          ARCHIVE="archive/GameControl-project.zip"
-          if [ -f settings.gradle.kts ]; then
-            echo "Project already extracted. Skipping unzip."
-          elif [ -f "$ARCHIVE" ]; then
-            echo "Extracting $ARCHIVE into the repository root..."
-            unzip -q -o "$ARCHIVE" -d .
-          else
-            echo "::error::Neither settings.gradle.kts nor $ARCHIVE was found."
-            exit 1
-          fi
-          ls -la
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # Installs Gradle 8.9 so the wrapper can be generated if it is missing.
+      # Installs Gradle 8.9. Used to create the wrapper when it is missing.
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -69,9 +52,38 @@ jobs:
         run: ./gradlew testDebugUnitTest --stacktrace
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        id: build
+        shell: bash
+        run: |
+          set -o pipefail
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
+
+      # Runs only when the build fails. Lists the Kotlin compile errors
+      # (lines starting with "e: ") in the run summary and as annotations.
+      - name: Summarize compile errors
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo "## Compile errors"
+            echo ""
+            echo '```'
+            grep -E '^e: ' build.log || echo "No 'e:' lines found. See the build.log artifact."
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep -E '^e: ' build.log | sed 's/^/::error::/' || true
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Upload debug APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: gamecontrol-debug-apk
@@ -90,7 +102,7 @@ jobs:
 
       # Runs only for version tags such as v0.1.0.
       - name: Publish GitHub release for tag
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
