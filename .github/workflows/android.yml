@@ -1,5 +1,5 @@
 
-name: Android CI and Release
+name: GameControl Android CI
 
 on:
   push:
@@ -18,73 +18,151 @@ concurrency:
 
 jobs:
   build:
-    name: Lint, test, build
+    name: Extract, Lint, Test and Build
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
+      # 1. Download repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      # 2. Automatically extract ZIP
+      - name: Automatically unzip GameControl ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ZIP_FILE="GameControl-phase3-4-5.zip"
+
+          if [ ! -f "$ZIP_FILE" ]; then
+            echo "::error::ZIP file not found: $ZIP_FILE"
+            exit 1
+          fi
+
+          mkdir -p extracted
+
+          unzip -o "$ZIP_FILE" -d extracted
+
+          echo "ZIP extraction completed successfully"
+
+          find extracted -maxdepth 3 -type f | sort | head -200
+
+      # 3. Install Java
+      - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle 8.9
+      # 4. Install Gradle
+      - name: Setup Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Run Android lint
-        run: gradle lintDebug --stacktrace
+      # 5. Detect Android project
+      - name: Locate Android project
+        id: project
+        shell: bash
+        run: |
+          set -euo pipefail
 
-      - name: Run unit tests
-        run: gradle testDebugUnitTest --stacktrace
+          if [ -f "settings.gradle" ] || [ -f "settings.gradle.kts" ]; then
+            PROJECT_DIR="."
+          else
+            SETTINGS_FILE=$(find extracted -maxdepth 5 \
+              \( -name settings.gradle \
+              -o -name settings.gradle.kts \) \
+              -print -quit)
 
-      - name: Build debug APK
+            if [ -z "$SETTINGS_FILE" ]; then
+              echo "::error::Android Gradle project not found"
+              exit 1
+            fi
+
+            PROJECT_DIR=$(dirname "$SETTINGS_FILE")
+          fi
+
+          echo "project_dir=$PROJECT_DIR" >> "$GITHUB_OUTPUT"
+
+          echo "Project directory: $PROJECT_DIR"
+
+      # 6. Android lint
+      - name: Run Android Lint
+        shell: bash
+        run: |
+          cd "${{ steps.project.outputs.project_dir }}"
+          gradle lintDebug --stacktrace
+
+      # 7. Unit tests
+      - name: Run Unit Tests
+        shell: bash
+        run: |
+          cd "${{ steps.project.outputs.project_dir }}"
+          gradle testDebugUnitTest --stacktrace
+
+      # 8. Build APK
+      - name: Build Debug APK
         shell: bash
         run: |
           set -o pipefail
-          gradle assembleDebug --stacktrace 2>&1 | tee build.log
 
-      - name: Upload debug APK
+          cd "${{ steps.project.outputs.project_dir }}"
+
+          gradle assembleDebug --stacktrace \
+            2>&1 | tee "$GITHUB_WORKSPACE/build.log"
+
+      # 9. Upload APK
+      - name: Upload GameControl APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: gamecontrol-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: GameControl-debug-apk
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            extracted/**/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 14
 
-      - name: Upload build log
+      # 10. Upload build log
+      - name: Upload Build Log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: build-log
+          name: GameControl-build-log
           path: build.log
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Upload lint report
+      # 11. Upload lint report
+      - name: Upload Lint Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lint-report
-          path: app/build/reports/lint-results-debug.html
+          name: GameControl-lint-report
+          path: |
+            app/build/reports/lint-results-debug.html
+            extracted/**/app/build/reports/lint-results-debug.html
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Publish GitHub release
+      # 12. Publish release for version tags
+      - name: Publish GitHub Release
         if: success() && startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
+          set -euo pipefail
+
+          PROJECT_DIR="${{ steps.project.outputs.project_dir }}"
+
           mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk \
+
+          cp "$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk" \
             "dist/GameControl-${GITHUB_REF_NAME}.apk"
+
           gh release create "${GITHUB_REF_NAME}" dist/*.apk \
             --title "GameControl ${GITHUB_REF_NAME}" \
             --generate-notes \
