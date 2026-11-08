@@ -39,10 +39,22 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      # Creates gradlew and gradle-wrapper.jar if they are not in the repo.
+      # --no-validate-url skips the network check that failed in the last run.
+      # The step retries because the failure is often temporary.
       - name: Generate Gradle wrapper if missing
         if: hashFiles('gradle/wrapper/gradle-wrapper.jar') == ''
         shell: bash
-        run: gradle wrapper --gradle-version 8.9
+        run: |
+          for attempt in 1 2 3; do
+            if gradle wrapper --gradle-version 8.9 --no-validate-url; then
+              exit 0
+            fi
+            echo "Wrapper generation failed (attempt $attempt). Retrying in 15 seconds..."
+            sleep 15
+          done
+          echo "::error::Could not generate the Gradle wrapper after 3 attempts."
+          exit 1
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
