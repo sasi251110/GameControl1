@@ -2,7 +2,7 @@ package com.gamecontrol.app.model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateSetOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 
 /**
@@ -11,7 +11,8 @@ import androidx.compose.runtime.setValue
  */
 class ControllerUiState {
 
-    val pressed = mutableStateSetOf<ControllerButton>()
+    /** Buttons currently held down. Compose observes this list for changes. */
+    val pressed = mutableStateListOf<ControllerButton>()
 
     var leftX by mutableFloatStateOf(0f)
         private set
@@ -23,7 +24,12 @@ class ControllerUiState {
         private set
 
     fun setButton(button: ControllerButton, isPressed: Boolean) {
-        if (isPressed) pressed.add(button) else pressed.remove(button)
+        val alreadyPressed = pressed.contains(button)
+        if (isPressed && !alreadyPressed) {
+            pressed.add(button)
+        } else if (!isPressed && alreadyPressed) {
+            pressed.remove(button)
+        }
     }
 
     fun setStick(left: Boolean, x: Float, y: Float) {
